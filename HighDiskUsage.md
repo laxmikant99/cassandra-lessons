@@ -93,12 +93,12 @@ Your compaction may be failing due to not enough space
 **fix:** immediately get some space by moving 'unused' table to some other place or truncate them to give some room for compaction of other table.
 
 13. Probably a bug in you Cassandra version:
-For example: obsolete compacted files are not being deleted
-logs on Cassandra 2.0.14 after rolling restart while repair was also:
+For example: obsolete compacted files are not being deleted.
+ Logs on Cassandra 2.0.14 after rolling restart while repair was also running:
 
-    INFO [CompactionExecutor:1957] 2020-01-20 06:44:56,721 CompactionTask.java (line 120) Compacting [SSTableReader(path='/var/lib/cassandra/data/keyspace/columnfamily/keyspace-columnfamily-jb-123456-Data.db'), SSTableReader(path='/var/lib/cassandra/data/keyspace/columnfamily/keyspace-columnfamily-jb-234567-Data.db'), SSTableReader(path='/var/lib/cassandra/data/keyspace/columnfamily/keyspace-columnfamily-jb-345678-Data.db')]
-    INFO [CompactionExecutor:1957] 2020-01-20 12:45:23,270 ColumnFamilyStore.java (line 795) Enqueuing flush of Memtable-compactions_in_progress@519967741(0/0 serialized/live bytes, 1 ops)
-    INFO [CompactionExecutor:1957] 2020-01-20 12:45:23,502 CompactionTask.java (line 296) Compacted 3 sstables to [/var/lib/cassandra/data/keyspace/columnfamily/keyspace-columnfamily-jb-456789,].  136,795,757,524 bytes to 100,529,812,389 (~73% of original) in 21,626,781ms = 4.433055MB/s.  1,738,999,743 total partitions merged to 1,274,232,528.  Partition merge counts were {1:1049583261, 2:309997005, 3:23140824, }
+        INFO [CompactionExecutor:1957] 2020-01-20 06:44:56,721 CompactionTask.java (line 120) Compacting [SSTableReader(path='/var/lib/cassandra/data/keyspace/columnfamily/keyspace-columnfamily-jb-123456-Data.db'), SSTableReader(path='/var/lib/cassandra/data/keyspace/columnfamily/keyspace-columnfamily-jb-234567-Data.db'), SSTableReader(path='/var/lib/cassandra/data/keyspace/columnfamily/keyspace-columnfamily-jb-345678-Data.db')]
+        INFO [CompactionExecutor:1957] 2020-01-20 12:45:23,270 ColumnFamilyStore.java (line 795) Enqueuing flush of Memtable-compactions_in_progress@519967741(0/0 serialized/live bytes, 1 ops)
+        INFO [CompactionExecutor:1957] 2020-01-20 12:45:23,502 CompactionTask.java (line 296) Compacted 3 sstables to [/var/lib/cassandra/data/keyspace/columnfamily/keyspace-columnfamily-jb-456789,].  136,795,757,524 bytes to 100,529,812,389 (~73% of original) in 21,626,781ms = 4.433055MB/s.  1,738,999,743 total partitions merged to 1,274,232,528.  Partition merge counts were {1:1049583261, 2:309997005, 3:23140824, }
 
 **fix:** delete obsolete file and restart and upgrade to stable version soon.
 
