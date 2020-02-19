@@ -4,3 +4,5 @@
 
 2.  Check [this](https://github.com/laxmikant99/cassandra-lessons/blob/master/HighDiskUsage.md) for some of the steps to resolve high disk usage issue in Cassandra.
 
+3. Check [this](https://github.com/laxmikant99/cassandra-lessons/blob/master/HighReadLatency.md) for 15 reasons of read latency in Cassandra
+
