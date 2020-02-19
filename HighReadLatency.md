@@ -33,6 +33,7 @@ If you find any specific query is taking time then You can do 'TRACING ON'  in c
 **Fix:** Needs to identify the faulty node and trouble shoot it. Also check that your application is distributing the load evenly. Make sure you partition keys are such that it distributed evenly. Also try disabling dynamic_snitch in cassandra.yaml and test.
 
 **6. Secondary indexes:** If not chosen wisely will cause latency at co-ordinator level. Well If you create SI on very high cardinality field (eg: email id or any unique id) or very low cardinality field (eg: sex:M/F) then you are in trouble. 
+
 **7. Consistency level and Cross-DC traffic :** As you increase your consistency level your read operation will slow down. Using a QUOURM consistency in multi dc cluster can cause Cross-DC traffic and hence slow read.
 
 **Fix:** If possible, try using LOCAL_QUORUM in case of multi dc cluster. If you don't want strong consistency you can probably use read consistency lesser than QUORUM.  Avoid using ALL consistency in production.
