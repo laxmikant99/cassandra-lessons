@@ -62,8 +62,9 @@ You can also check sstable metadata to check tombstone ratio.
 
 **14  Garbage collection:** Check gc logs and nodetool gcstas to see the gc pauses.  GC can be due to multiple reason like bad data model, bad gc tuning parameters etc. 
 
-**15. Resource bound:** Check if your system is not cpu or io bound during read. you can use command like top/htop or iostat for that. Page cache can make the query fast so You can also check if enough page cache is available or not by using free command.  
-Apache Cassandra has a good [article](http://cassandra.apache.org/doc/4.0/troubleshooting/use_tools.html) regarding same 
-
+**15. Resource bound:** Check if your system is not cpu or io bound during read. you can use command like top/htop or iostat for that. Page cache can make the query fast so You can also check if enough page cache is available or not by using free command. 
+A higher readahead value (> 128 kb) can cause high i/o and hence read latency.
+**Fix:** Apache Cassandra has a good [article](http://cassandra.apache.org/doc/4.0/troubleshooting/use_tools.html) regarding same   Also check readahead value using blockdev - report command. and set it using blockdev- setra command.
+ 
 **Conclusion:** Cassandra can be an great fit to your application only if you have suitable data model and access pattern. Cassandra tuning is complex and in this blog i have given high level idea of points to check while resolving read latency in Cassandra. 
 Feel free to add more points in comments if you have faced in the comment.
