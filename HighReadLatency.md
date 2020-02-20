@@ -4,7 +4,7 @@ Below are probable cause of Cassandra read latency:
 **1. Wide partition :**  Father of modern medicine Hippocrates once said that “All disease begins in the gut” , In the similar fashion I believe all major problems in Cassandra begins with Wide partition. Hence this can be a good reason for you slow read. nodetool tablehistogram "Partition Size" can give an idea, theoretically partition size should not be more than 100 mb. In practice it should be much lesser than 100 mb. 
 
 **Fix:** Try bucketizing the partition key for the table to have thin partition.
-e.g: partition key on organization name may be a bad choice however (organization, department) may be a fix.
+e.g: For an employee table, partition key on organization name may be a bad choice however (organization, department) may be a fix.
 
 **2. Bad query:** Below are some example of bad queries which can cause Coordinator level latency.
 
