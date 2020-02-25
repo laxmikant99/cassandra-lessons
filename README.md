@@ -6,3 +6,5 @@
 
 3. Check [this](https://github.com/laxmikant99/cassandra-lessons/blob/master/HighReadLatency.md) for 15 reasons of read latency in Cassandra
 
+4. Check [this](https://github.com/laxmikant99/cassandra-lessons/blob/master/HighWriteLatency.md) for 15 reasons of write latency in Cassandra
+
