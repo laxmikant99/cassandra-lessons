@@ -8,3 +8,5 @@
 
 4. Check [this](https://github.com/laxmikant99/cassandra-lessons/blob/master/HighWriteLatency.md) for 15 reasons of write latency in Cassandra
 
+5. Check [this](https://github.com/laxmikant99/cassandra-single-node-disater-recovery-lessons) for Cassandra Single node disaster recovery and surprises
+
