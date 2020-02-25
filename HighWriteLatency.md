@@ -3,9 +3,8 @@ Cassandra is know for its fast write due it its simple write path. However if yo
 
 1. Bad disk: SAN or NAS is considered as anti-pattern in Cassandra so we should avoid that. Local SSD is preferred for fast read and write.
 
-2. Large batch write : If we are using batch query and it is of big size it will cause latency at coordinator level.
-Multi-partition batch, when to use batch, some configuration parameter 
-Large batches : Multi partition batch is kind of anti pattern in Cassandra. And also having lots of queries in b
+2. Large batch write : If we are using batch query and it is of big size it will cause latency at coordinator level.Multi partition batch is kind of anti pattern in Cassandra so avoid that. 
+Batch in cassandra should be used to keep the write atomic in multiple de-normalized tables. Below are some configuration parameters related to batch.
 
  
 
