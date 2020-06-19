@@ -1,5 +1,5 @@
 
-Cassandra anti patterns:
+# Cassandra anti patterns:
 
 No amount of performance tuning can mitigate a known anti-pattern. When you google 'antinpatterns in Cassandra' you will find lots of information. Datastax has done great a job listing many of them but that is not all. My aim is to jot down all antipatterns listed at one place. Which is very crucial to know for every Cassandra users.
 
@@ -59,15 +59,18 @@ Tips: Put big files in bucket store like S3 and keep the metadata/reference link
 
 22. Intensive update on same column : This will cause performance impact during read as multiple sstable scan is required. To avoid this, use leveled compaction if your I/O can keep up. else change your data model see the below example:
 
-    Bad design:
-    CREATE TABLE sensor_data ( id long, value double, PRIMARY KEY (id));
-    UPDATE sensor_data set value = ? WHERE id = ? --This is frequent operation on same id
+```sql
+Bad design: 
+    CREATE TABLE sensor_data ( id long, value double, PRIMARY KEY (id)); 
+    UPDATE sensor_data set value = ? WHERE id = ? --This is frequent operation on same id 
     SELECT value FROM sensor_data where id = ? --Here you will get read latency (worst case: timeout)
-    
-    Better Design:
-    CREATE TABLE sensor_data ( id long, date timestamp, value double, PRIMARY KEY (id, date)) WITH CLUSTERING ORDER(date DESC) ;
-    INSERT INTO sensor_data (id, date, value) VALUES (?, ?, ? );
-    SELECT value FROM sensor_data where id = ? LIMIT 1; -- you will get the latest sensor value.
+
+ Better Design: 
+    CREATE TABLE sensor_data ( id long, date timestamp, value double, PRIMARY KEY (id, date)) WITH CLUSTERING ORDER(date DESC) ; 
+    INSERT INTO sensor_data (id, date, value) VALUES (?, ?, ? ); 
+    SELECT value FROM sensor_data where id = ? LIMIT 1; -- you will get the latest sensor value
+
+```
 
 23. Concurrent schema and topology change: An example of such design could be creating/dropping table every day (separate table for daily data). The issue comes up when you try to change the topology (for example adding/removing a node) and while your topology change is in progress your application tried to perform DDL as part of your daily routine. Concurrent schema change and topology change is an anti pattern. 
 
@@ -80,7 +83,6 @@ Tips: Put big files in bucket store like S3 and keep the metadata/reference link
 27. Boot-strapping multiple nodes concurrently : Concurrent bootstrap may cause inconsistent token range movement between nodes.  To safely bootstrap each node try sequential bootstrap . While adding a separate dc nodes can be added by setting auto_bootstrap=false and following 2 minute pause rule between two consecutive startup in the new dc.
 
 28. Running full repair (nodetool repair without any parameter) on all the nodes to avoid redundant repair of replicas: Try using sub-range repair preferably using tools like reaper or run nodetool repair -pr on each node sequentially. Keep in mind that Cassandra 4.0 has made great improvement in repair and fixed incremental repair  and will be worth trying.
-
 
 29. Too many tables : Substantial performance degradation due to high memory usage and compaction issues can be caused by having too many tables in a cluster. Try to keep the count less than 200. 
 
@@ -103,7 +105,7 @@ Tips: Put big files in bucket store like S3 and keep the metadata/reference link
 38. Don't mix normal write and LWT write on same records to avoid inconsistency during concurrent execution. Also LWT write with normal read (consistency QUORUM) on same record in parallel may show stale data so to avoid this inconsistency use read with consistency SERIAL/LOCAL_SERIAL. 
  	
 Reference: 
-https://docs.datastax.com/en/dse-planning/doc/planning/planningAntiPatterns.html
-https://strange-loop-2012-notes.readthedocs.io/en/latest/tuesday/Cassandra.html
-https://www.slideshare.net/doanduyhai/Cassandra-nice-use-cases-and-worst-anti-patterns
+- https://docs.datastax.com/en/dse-planning/doc/planning/planningAntiPatterns.html
+- https://strange-loop-2012-notes.readthedocs.io/en/latest/tuesday/Cassandra.html
+- https://www.slideshare.net/doanduyhai/Cassandra-nice-use-cases-and-worst-anti-patterns
 
