@@ -5,7 +5,7 @@ No amount of performance tuning can mitigate a known anti-pattern. When you goog
 
 1. Read before write: Two major draw back of read before write pattern is  a. Performance impact b. You will not be able to achieve atomic compare and set in case multiple client application are accessing same record in parallel.
 To get rid of the later issue, users ends up using LWT (light weight transaction) in Cassandra. But this worsen the performance in terms of latency.
-The best way to change your data model which avoid this pattern. [This](https://easyprograming.com/posts/2017/08/Cassandra-deep-dive-read-before-write-evil/) is a very good post which has some good examples of data model change.
+The best way to change your data model which avoid this pattern. [This](https://easyprograming.com/posts/2017/08/cassandra-deep-dive-read-before-write-evil/) is a very good post which has some good examples of data model change.
 
 2. Collections are meant for storing/denormalizing relatively small amount of data. It is a anti-pattern to use a (single) collection to store large amounts of data. Although maximum  size of map and list is 2 GB, users should try to keep much lesser value than that in MBs.
 
