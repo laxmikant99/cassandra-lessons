@@ -10,3 +10,5 @@
 
 5. Check [this](https://github.com/laxmikant99/cassandra-single-node-disater-recovery-lessons) for Cassandra Single node disaster recovery and surprises
 
+6. Check [this](https://github.com/laxmikant99/cassandra-lessons/blob/master/CassandraAntiPatterns.md) for list of all Cassandra anti-patterns 
+
