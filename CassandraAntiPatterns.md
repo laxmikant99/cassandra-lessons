@@ -103,6 +103,8 @@ Bad design:
 37. If Using GossipingPropertyFileSnitch and  Cassandra-topology.properties is still present in the server may cause some unwanted behavior for example: different nodes appear to be down in the nodetool status output or nodetool status shows all down nodes under wrong dc name when restarting a node while others are down. The GossipingPropertyFileSnitch always loads Cassandra-topology.properties when that file is present. Remove the file from each node on any new cluster or any cluster migrated from the PropertyFileSnitch.
 
 38. Don't mix normal write and LWT write on same records to avoid inconsistency during concurrent execution. Also LWT write with normal read (consistency QUORUM) on same record in parallel may show stale data so to avoid this inconsistency use read with consistency SERIAL/LOCAL_SERIAL. 
+
+39. It is strictly NOT recommend to run multiple cassandra ddl operations for same table concurrently from different application, it may cause DATA LOSS. Check https://issues.apache.org/jira/browse/CASSANDRA-15844.
  	
 Reference: 
 - https://docs.datastax.com/en/dse-planning/doc/planning/planningAntiPatterns.html
